@@ -53,7 +53,15 @@ class Detail_book(DetailView):
     context_object_name = 'book'
 
 
+class Detail_Book_slug(DetailView):
+    model = Book
+    template_name = 'library/detail_book.html'
+    slug_field = 'slug'
+    slug_url_kwarg = 'myslug'
 
-
-
+    def get_queryset(self, **kwargs) :
+        if self.request.user.is_authenticated:
+            return Book.objects.filter(slug = self.kwargs['myslug'])
+        else :
+            return Book.objects.none()
 
