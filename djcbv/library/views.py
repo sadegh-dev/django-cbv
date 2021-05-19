@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 from .models import Book
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic import ListView
+from django.views.generic import DetailView
+from django.views.generic import FormView
+from django.views.generic import CreateView
+
 from .forms import LibraryCreateForm
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -88,4 +90,25 @@ class LibraryCreate(FormView):
         book = Book(title=data['title'], slug=slugify(data['title']))
         book.save()
         messages.success(self.request, 'your book added', 'success')
+
+
+
+class LibraryCraete2(CreateView):
+    model = Book
+    fields=('title',)
+    template_name = 'library/library_create2.html'
+    success_url = reverse_lazy('library:list_books')
+
+    def form_valid(self, form):
+        book = form.save(commit=False)
+        book.slug = slugify(form.cleaned_data['title'])
+        book.save()
+        messages.success(self.request, 'your book added', 'success')
+        return super().form_valid(form)
+
+
+
+
+
+
 

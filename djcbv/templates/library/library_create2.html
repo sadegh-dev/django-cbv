@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3> Add by FormView</h3><br />
+    <h3> Add by CreateView</h3><br />
     <form action='' method='POST' >
         {% csrf_token %}
         {{ form.as_p }}
@@ -11,4 +11,3 @@
 
 
 
- 
