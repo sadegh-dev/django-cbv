@@ -4,6 +4,13 @@ from django.views.generic.base import TemplateView
 from .models import Book
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormView
+from .forms import LibraryCreateForm
+from django.urls import reverse_lazy
+from django.utils.text import slugify
+from django.contrib import messages
+
+
 
 
 class Home(View):
@@ -53,6 +60,7 @@ class Detail_book(DetailView):
     context_object_name = 'book'
 
 
+
 class Detail_Book_slug(DetailView):
     model = Book
     template_name = 'library/detail_book.html'
@@ -64,4 +72,20 @@ class Detail_Book_slug(DetailView):
             return Book.objects.filter(slug = self.kwargs['myslug'])
         else :
             return Book.objects.none()
+
+
+
+class LibraryCreate(FormView):
+    form_class = LibraryCreateForm
+    template_name = 'library/library_create.html'
+    success_url = reverse_lazy('library:list_books')
+
+    def form_valid(self, form):
+        self.create_book(form.cleaned_data)
+        return super().form_valid(form)
+
+    def create_book(self, data):
+        book = Book(title=data['title'], slug=slugify(data['title']))
+        book.save()
+        messages.success(self.request, 'your book added', 'success')
 
