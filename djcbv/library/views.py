@@ -2,10 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 from .models import Book
-from django.views.generic import ListView
-from django.views.generic import DetailView
-from django.views.generic import FormView
-from django.views.generic import CreateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView 
 
 from .forms import LibraryCreateForm
 from django.urls import reverse_lazy
@@ -103,11 +100,15 @@ class LibraryCraete2(CreateView):
         book = form.save(commit=False)
         book.slug = slugify(form.cleaned_data['title'])
         book.save()
-        messages.success(self.request, 'your book added', 'success')
+        messages.success(self.request, 'your book added2', 'success')
         return super().form_valid(form)
 
 
 
+class DeleteBook(DeleteView):
+    model = Book
+    template_name = 'library/delete_book.html'
+    success_url = reverse_lazy('library:list_books')
 
 
 
