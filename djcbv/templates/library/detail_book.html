@@ -4,7 +4,8 @@
     <h3>{{ book.title }} </h3>
     <hr />
     <p>{{ book.created }}</p><hr /><br />
-    <a href='{% url "library:delete_book" book.id %}' class='btn btn-danger' >delete</a>
+    <a href='{% url "library:delete_book" book.id %}' class='btn btn-danger' >delete</a> 
+    <a href='{% url "library:update_book" book.id %}' class='btn btn-warning' >update</a>
     
 {% endblock %}
 

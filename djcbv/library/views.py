@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 from .models import Book
-from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView 
+from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView, UpdateView
 
 from .forms import LibraryCreateForm
 from django.urls import reverse_lazy
@@ -109,6 +109,15 @@ class DeleteBook(DeleteView):
     model = Book
     template_name = 'library/delete_book.html'
     success_url = reverse_lazy('library:list_books')
+
+
+
+class UpdateBook(UpdateView):
+    model = Book
+    fields = ('title',)
+    template_name = 'library/update_book.html'
+    success_url = reverse_lazy('library:list_books')
+
 
 
 

@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3> Add by FormView</h3><br />
+    <h3> Update Book</h3><br />
     <form action='' method='POST' >
         {% csrf_token %}
         {{ form.as_p }}
-        <input type='submit' value='create' class='btn btn-primary' >
+        <input type='submit' value='update' class='btn btn-primary' >
     </form>
 {% endblock %}
-
-
-
- 

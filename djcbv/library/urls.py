@@ -12,6 +12,7 @@ urlpatterns = [
     path('create/', views.LibraryCreate.as_view(), name='create_books'),
     path('create2/', views.LibraryCraete2.as_view(), name='create_books2'),
     path('delete/<int:pk>/', views.DeleteBook.as_view(), name='delete_book'),
+    path('update/<int:pk>/', views.UpdateBook.as_view(), name='update_book'),
 ]
 
 
