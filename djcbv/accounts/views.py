@@ -10,5 +10,7 @@ class UserLogin(auth_views.LoginView):
     }
 
 
+class UserLogout(auth_views.LogoutView):
+    next_page = 'library:list_books'
 
 

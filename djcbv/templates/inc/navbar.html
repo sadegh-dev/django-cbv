@@ -8,19 +8,24 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'library:home2' %}">Home2</a>        
                 </li>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'library:list_books' %}">list books</a>        
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'library:create_books' %}">Add books(FormView)</a>        
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'library:create_books2' %}">Add books(CreateView)</a>        
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}"> Login </a>        
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'library:create_books' %}">Add books(FormView)</a>        
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'library:create_books2' %}">Add books(CreateView)</a>        
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">Logout</a>        
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}"> Login </a>        
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
