@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
-from .models import Book
-from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView, UpdateView, MonthArchiveView
 
+from .models import Book, Comment
+from django.views.generic.edit import FormMixin
+from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView, UpdateView, MonthArchiveView
+from .forms import BookCommentsForm
+from django.urls import reverse_lazy, reverse
 from .forms import LibraryCreateForm
-from django.urls import reverse_lazy
+
 from django.utils.text import slugify
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -62,12 +65,27 @@ class Detail_book(DetailView):
 
 
 
-class Detail_Book_slug(LoginRequiredMixin, DetailView):
+class Detail_Book_slug(LoginRequiredMixin, FormMixin, DetailView):
     model = Book
     template_name = 'library/detail_book.html'
+    form_class = BookCommentsForm
     slug_field = 'slug'
     slug_url_kwarg = 'myslug'
     login_url = 'accounts:login'
+
+    def get_success_url(self) :
+        return reverse('library:detail_book_slug', kwargs={'myslug': self.the_book.slug} )
+
+    def post(self, request, *args, **kwargs):
+        self.the_book = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            comment = Comment(book = self.the_book, name = form.cleaned_data['name'], body = form.cleaned_data['body'])
+            comment.save()
+        return super().form_valid(form)
+
+
+
 
 """
     def get_queryset(self, **kwargs) :

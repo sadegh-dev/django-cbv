@@ -1,3 +1,4 @@
+from .models import Comment
 from django import forms
 
 
@@ -6,5 +7,8 @@ class LibraryCreateForm(forms.Form):
 
 
 
-
+class BookCommentsForm(forms.ModelForm):
+    class Meta :
+        model = Comment
+        fields = ('name','body')
 
