@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 from .models import Book
-from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, DeleteView, UpdateView, MonthArchiveView
 
 from .forms import LibraryCreateForm
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 
@@ -60,17 +62,27 @@ class Detail_book(DetailView):
 
 
 
-class Detail_Book_slug(DetailView):
+class Detail_Book_slug(LoginRequiredMixin, DetailView):
     model = Book
     template_name = 'library/detail_book.html'
     slug_field = 'slug'
     slug_url_kwarg = 'myslug'
+    login_url = 'accounts:login'
 
+"""
     def get_queryset(self, **kwargs) :
         if self.request.user.is_authenticated:
             return Book.objects.filter(slug = self.kwargs['myslug'])
         else :
             return Book.objects.none()
+"""
+
+
+class MonthBooks(MonthArchiveView):
+    model = Book
+    date_field = 'created'
+    month_format = '%m'
+    template_name = 'library/month_books.html'
 
 
 
