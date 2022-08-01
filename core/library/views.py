@@ -52,7 +52,23 @@ class HomeRedir(RedirectView):
         return super().get_redirect_url(*args, **kwargs)
 
 
+######################################
 
+from django.views.generic.list import ListView
+from .models import Book
 
+class list_books(ListView):
+    template_name = 'list_books.html'
+    context_object_name= 'books'
+    ordering = '-date_publish'
+
+    def get_queryset(self):
+        result = Book.objects.filter(pages__gt = 200)
+        return result
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['shop'] = 'book-center'
+        return context
 
 

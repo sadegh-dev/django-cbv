@@ -1,0 +1,8 @@
+<h1> welcome to {{shop}} </h1>
+
+{% for book in books %}
+    {{book.name}} |||
+    {{book.pages}} |||  
+    {{book.date_publish}}
+    <hr />
+{% endfor %}
