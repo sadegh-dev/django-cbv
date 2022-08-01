@@ -31,3 +31,28 @@ class Hometemp(TemplateView):
         context = super().get_context_data(**kwargs)
         context['books'] = Book.objects.all()
         return context
+
+
+######################################
+
+from django.views.generic import RedirectView
+
+class HomeRedir(RedirectView):
+    url = '/home/add/'
+    #OR
+    url = 'https://google.com'
+    #OR
+    pattern_name = 'home:add-book'
+
+    # http : ......./?name=harry
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        print(kwargs['name'])
+        return super().get_redirect_url(*args, **kwargs)
+
+
+
+
+
+
