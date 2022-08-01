@@ -72,3 +72,14 @@ class ListBooks(ListView):
         return context
 
 
+##########################################
+
+from django.views.generic.detail import DetailView
+from .models import Book
+
+class BookDetail(DetailView):
+    template_name = 'detail_book.html'
+
+    def get_object(self, queryset=None):
+        return Book.objects.get (name = self.kwargs['name'])
+
