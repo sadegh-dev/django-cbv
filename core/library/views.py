@@ -57,7 +57,7 @@ class HomeRedir(RedirectView):
 from django.views.generic.list import ListView
 from .models import Book
 
-class list_books(ListView):
+class ListBooks(ListView):
     template_name = 'list_books.html'
     context_object_name= 'books'
     ordering = '-date_publish'
