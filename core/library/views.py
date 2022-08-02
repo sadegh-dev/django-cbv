@@ -4,9 +4,17 @@ from django.views import View
 class Home(View):
 
     http_method_names= ['get', 'options']
+    
+    def setup(self, request, *args, **kwargs) :
+        self.name = kwargs.get('name') # send by URL
+        return super().setup(request, *args, **kwargs)
 
-    def get(self, request):
-        return render(request, 'home.html')
+    def get(self, request, *args, **kwargs):
+        context = {
+            'admin':'False' ,
+            'name' : self.name
+            }
+        return render(request, 'home.html', context)
     
     def options(self, request, *args, **kwargs):
         response = super().options(request, *args, **kwargs)
