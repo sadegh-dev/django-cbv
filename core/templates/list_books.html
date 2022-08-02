@@ -1,7 +1,7 @@
 <h1> welcome to {{shop}} </h1>
 
 {% for book in books %}
-    <a href='{% url "library:detail-book" book.name %}' >{{book.name}} </a>  |||
+    <a href='{% url "library:detail-book" book.name  book.date_publish %}' >{{book.name}} </a>  |||
     {{book.pages}} |||  
     {{book.date_publish}}
     <hr />

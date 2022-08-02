@@ -34,6 +34,7 @@ from .models import Book
 
 class Hometemp(TemplateView):
     template_name = 'hometemp.html'
+    extra_context = {'mess':'from extra context'}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -88,6 +89,8 @@ from .models import Book
 class BookDetail(DetailView):
     template_name = 'detail_book.html'
 
-    def get_object(self, queryset=None):
-        return Book.objects.get (name = self.kwargs['name'])
-
+    def get_object(self, queryset= None) :
+        return Book.objects.get(
+            name = self.kwargs['name'] , 
+            date_publish = self.kwargs['date']
+        )
