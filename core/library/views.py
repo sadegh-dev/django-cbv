@@ -46,17 +46,17 @@ class Hometemp(TemplateView):
 from django.views.generic import RedirectView
 
 class HomeRedir(RedirectView):
-    url = '/home/add/'
+    #url = '/home/add/'
     #OR
-    url = 'https://google.com'
+    #url = 'https://google.com'
     #OR
-    pattern_name = 'home:add-book'
+    pattern_name = 'library:home'
 
     # http : ......./?name=harry
     query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
-        print(kwargs['name'])
+        print(kwargs.get('name'))
         return super().get_redirect_url(*args, **kwargs)
 
 
