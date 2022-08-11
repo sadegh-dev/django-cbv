@@ -7,4 +7,4 @@ class Book(models.Model):
     date_publish = models.DateTimeField()
 
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.pages}'
